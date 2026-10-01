@@ -197,7 +197,31 @@ setInterval(function(){
 },1000);
 
 updateScreen();
+const withdrawBtn = document.createElement("button");
+withdrawBtn.innerText = "💳 Withdraw";
+withdrawBtn.style.cssText =
+"margin:20px;padding:15px 30px;border:0;border-radius:12px;background:#16a34a;color:white;font-size:20px;";
 
+withdrawBtn.onclick = function(){
+    const amount = prompt("কত টাকা Withdraw করতে চান?");
+    const number = prompt("bKash/Nagad নম্বর দিন:");
+
+    if(!amount || !number) return;
+
+    const cash = Number(amount);
+
+    if(cash <= 0 || cash > money){
+        alert("আপনার ব্যালেন্স যথেষ্ট নয়!");
+        return;
+    }
+
+    money -= cash;
+    updateScreen();
+
+    alert("Withdraw request নেওয়া হয়েছে। নম্বর: " + number);
+};
+
+document.body.appendChild(withdrawBtn);
 </script>
 
 </body>
