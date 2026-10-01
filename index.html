@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rojob Income Game</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#101828,#172554);
+  color:white;
+  text-align:center;
+}
+
+.container{
+  max-width:500px;
+  margin:auto;
+  padding:25px 15px;
+}
+
+h1{
+  margin-bottom:8px;
+}
+
+.card{
+  background:#ffffff12;
+  border:1px solid #ffffff20;
+  border-radius:20px;
+  padding:20px;
+  margin:15px 0;
+}
+
+.money{
+  font-size:40px;
+  font-weight:bold;
+  color:#4ade80;
+  margin:15px;
+}
+
+.income{
+  color:#cbd5e1;
+  margin-bottom:20px;
+}
+
+.earn{
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  border:none;
+  background:#22c55e;
+  color:white;
+  font-size:25px;
+  font-weight:bold;
+  box-shadow:0 10px 30px #0008;
+}
+
+.earn:active{
+  transform:scale(.94);
+}
+
+button.upgrade{
+  width:100%;
+  padding:15px;
+  margin:8px 0;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  font-size:16px;
+}
+
+button.upgrade:disabled{
+  background:#475569;
+}
+
+.small{
+  color:#94a3b8;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>💰 Rojob Income Game</h1>
+<p>ক্লিক করে টাকা আয় করুন!</p>
+
+<div class="card">
+
+<div class="money">
+৳ <span id="money">0</span>
+</div>
+
+<div class="income">
+প্রতি সেকেন্ডে আয়: ৳ <span id="income">0</span>
+</div>
+
+<button class="earn" onclick="earnMoney()">
++ টাকা
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🛒 Upgrade</h2>
+
+<button class="upgrade" id="upgrade1" onclick="buyUpgrade(1)">
+⚡ Income +1 — দাম ৳10
+</button>
+
+<button class="upgrade" id="upgrade2" onclick="buyUpgrade(2)">
+🚀 Income +5 — দাম ৳50
+</button>
+
+<button class="upgrade" id="upgrade3" onclick="buyUpgrade(3)">
+💎 Income +20 — দাম ৳200
+</button>
+
+</div>
+
+<p class="small">
+Rojob Income Game © 2026
+</p>
+
+</div>
+
+<script>
+
+let money = 0;
+let income = 0;
+
+let prices = {
+  1: 10,
+  2: 50,
+  3: 200
+};
+
+function updateScreen(){
+
+  document.getElementById("money").innerText =
+    Math.floor(money);
+
+  document.getElementById("income").innerText =
+    income;
+
+  document.getElementById("upgrade1").disabled =
+    money < prices[1];
+
+  document.getElementById("upgrade2").disabled =
+    money < prices[2];
+
+  document.getElementById("upgrade3").disabled =
+    money < prices[3];
+}
+
+function earnMoney(){
+  money++;
+  updateScreen();
+}
+
+function buyUpgrade(type){
+
+  if(money < prices[type]) return;
+
+  money -= prices[type];
+
+  if(type === 1){
+    income += 1;
+    prices[1] *= 2;
+  }
+
+  if(type === 2){
+    income += 5;
+    prices[2] *= 2;
+  }
+
+  if(type === 3){
+    income += 20;
+    prices[3] *= 2;
+  }
+
+  updateScreen();
+}
+
+setInterval(function(){
+
+  money += income;
+  updateScreen();
+
+},1000);
+
+updateScreen();
+
+</script>
+
+</body>
+</html>
